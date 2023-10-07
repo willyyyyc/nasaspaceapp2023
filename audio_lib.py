@@ -5,13 +5,17 @@ import math
 
 class Note:
     def __init__(self, audio_file):
-        self.playable_tone = AudioSegment.from_file(audio_file)
+        unshortened_audio = AudioSegment.from_file(audio_file)
+        shortened_audio = unshortened_audio[0:30]
+        self.playable_tone = shortened_audio
+        
     
     def play_tone(self):
         play(self.playable_tone)
 
     def increase_volume(self, xDB):
-        play(self.playable_tone + xDB)
+        self.playable_tone = self.playable_tone + xDB  
+
 
 octave = {"a": Note("piano-keys/piano_a.wav"), 
           "b": Note("piano-keys/piano_b.wav"), 
@@ -27,24 +31,27 @@ def play_note(key):
 def increase_and_play(key, xDB):
     octave.get(key).increase_volume(xDB)
 
-
-
-
 def star_to_music(star):
     size = math.log(star.size) * 4
     intensity = star.intensity
     if (65 <= intensity < 70):
-        increase_and_play("a", size)
+        octave.get("a").increase_volume(size)
+        return octave.get("a")
     elif (70 <= intensity < 75):
-        increase_and_play("b", size)
+        octave.get("b").increase_volume(size)
+        return octave.get("b")
     elif (75 <= intensity < 80):
-        increase_and_play("c", size)
+        octave.get("c").increase_volume(size)
+        return octave.get("c")
     elif (80 <= intensity < 85):
-        increase_and_play("d", size)
+        octave.get("d").increase_volume(size)
+        return octave.get("d")
     elif (85 <= intensity < 90):
-        increase_and_play("e", size)
+        octave.get("e").increase_volume(size)
+        return octave.get("e")
     elif (90 <= intensity < 95):
-        increase_and_play("f", size)
+        octave.get("f").increase_volume(size)
+        return octave.get("f")
     elif (95 <= intensity < 100):
-        increase_and_play("g", size)
-
+        octave.get("g").increase_volume(size)
+        return octave.get("g")
