@@ -28,10 +28,10 @@ class Video:
             if not ret:
                 break
             
-            Frame(frame)
+            frame_obj = Frame(frame)
 
             # Append the frame to the list
-            frames.append(frame)
+            frames.append(frame_obj)
 
         self.frames = frames
 
