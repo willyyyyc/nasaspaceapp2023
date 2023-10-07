@@ -1,5 +1,8 @@
+from Song import Song
+from Sound import Sound
 from Video import Video  
 from Frame import Frame
+from audio_lib import star_to_music
 
 def get_stars(frame: 'Frame') -> 'Frame':
     """function responsible for optimizing the image to find stars
@@ -32,11 +35,21 @@ if __name__ == "__main__":
    
     video = Video("media/spaceVid.mp4")
     
+    sounds = []
+
     for frame in video.frames:
         
         stars = get_stars(frame)
 
+        tones = []
+
         for star in stars:
-            print(star)
+            tones.append(star_to_music(star))
         
-        break
+        sound = Sound(tones)
+
+        sounds.append(sound)
+    
+    song = Song(sounds)
+
+    
