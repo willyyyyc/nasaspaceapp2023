@@ -1,13 +1,11 @@
-class SoundSequence:
-    
-def __init__( self ):
-    self.sounds = []
+class Song:
+    def __init__(self, flags):
+        self.flags = flags
 
-def add_sound(self, sound):
-    self.sounds.append(sound)
-        
-def access_sound(self, reference):
-    playself.sounds['reference']
+    def find_flag(self, flag):
+        if flag in self.flags:
+            return self.flags[flag]
+    
     
     
     
