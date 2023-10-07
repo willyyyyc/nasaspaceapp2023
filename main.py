@@ -1,5 +1,6 @@
 from Song import Song
 from Sound import Sound
+from Tone import Tone
 from Video import Video  
 from Frame import Frame
 from audio_lib import star_to_music
@@ -44,7 +45,7 @@ if __name__ == "__main__":
         tones = []
 
         for star in stars:
-            tones.append(star_to_music(star))
+            tones.append(Tone(star_to_music(star)))
         
         sound = Sound(tones)
 

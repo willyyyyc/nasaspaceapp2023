@@ -17,13 +17,13 @@ class Note:
         self.playable_tone = self.playable_tone + xDB  
 
 
-octave = {"a": Note("piano-keys/piano_a.wav"), 
-          "b": Note("piano-keys/piano_b.wav"), 
-          "c": Note("piano-keys/piano_c.wav"), 
-          "d": Note("piano-keys/piano_d.wav"),
-          "e": Note("piano-keys/piano_e.wav"),
-          "f": Note("piano-keys/piano_f.wav"),
-          "g": Note("piano-keys/piano_g.wav")}
+octave = {"a": "piano-keys/piano_a.wav", 
+          "b": "piano-keys/piano_b.wav", 
+          "c": "piano-keys/piano_c.wav", 
+          "d": "piano-keys/piano_d.wav",
+          "e": "piano-keys/piano_e.wav",
+          "f": "piano-keys/piano_f.wav",
+          "g": "piano-keys/piano_g.wav"}
 
 def play_note(key):
     octave.get(key).play_tone()
@@ -35,23 +35,16 @@ def star_to_music(star):
     size = math.log(star.size) * 4
     intensity = star.intensity
     if (65 <= intensity < 70):
-        octave.get("a").increase_volume(size)
-        return octave.get("a")
+        return AudioSegment.from_file(octave.get("a"))[:33]+size
     elif (70 <= intensity < 75):
-        octave.get("b").increase_volume(size)
-        return octave.get("b")
+        return AudioSegment.from_file(octave.get("b"))[:33]+size
     elif (75 <= intensity < 80):
-        octave.get("c").increase_volume(size)
-        return octave.get("c")
+        return AudioSegment.from_file(octave.get("c"))[:33]+size
     elif (80 <= intensity < 85):
-        octave.get("d").increase_volume(size)
-        return octave.get("d")
+        return AudioSegment.from_file(octave.get("d"))[:33]+size
     elif (85 <= intensity < 90):
-        octave.get("e").increase_volume(size)
-        return octave.get("e")
+        return AudioSegment.from_file(octave.get("e"))[:33]+size
     elif (90 <= intensity < 95):
-        octave.get("f").increase_volume(size)
-        return octave.get("f")
+        return AudioSegment.from_file(octave.get("f"))[:33]+size
     elif (95 <= intensity < 100):
-        octave.get("g").increase_volume(size)
-        return octave.get("g")
+        return AudioSegment.from_file(octave.get("g"))[:33]+size
