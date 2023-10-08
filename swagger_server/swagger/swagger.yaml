@@ -1,0 +1,56 @@
+openapi: 3.0.0
+info:
+  title: home-iot-api
+  description: The API for the a NASA Space Apps Hackathon Project
+  version: 1.0.0
+servers:
+- url: https://virtserver.swaggerhub.com/wl504797/NASA-Space-Apps-2023-Sonograph/1.0.0
+  description: SwaggerHub API Auto Mocking
+paths:
+  /videoSonograph:
+    post:
+      summary: Represent a video of space with sound
+      description: Takes a video URL and returns an audio file or audio URL.
+      operationId: video_sonograph_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/videoSonograph_body'
+            examples:
+              example1:
+                summary: Example Request 1
+                value:
+                  video_url: https://example.com/video1.mp4
+              example2:
+                summary: Example Request 2
+                value:
+                  video_url: https://example.com/video2.mp4
+        required: true
+      responses:
+        "200":
+          description: Successful conversion.
+          content:
+            audio/mpeg:
+              schema:
+                type: string
+                description: Binary audio file data or a URL to the audio file.
+                format: binary
+                x-content-type: audio/mpeg
+        "400":
+          description: Bad request. Check the input parameters.
+        "500":
+          description: Internal server error. Something went wrong during conversion.
+      x-openapi-router-controller: swagger_server.controllers.default_controller
+components:
+  schemas:
+    videoSonograph_body:
+      required:
+      - video_url
+      type: object
+      properties:
+        video_url:
+          type: string
+          description: URL of the video to be converted.
+          format: uri
+

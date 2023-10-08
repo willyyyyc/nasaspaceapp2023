@@ -5,6 +5,15 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "swagger launch",
+            "type": "python",
+            "module": "swagger_server",
+            "request": "launch",
+            "console": "integratedTerminal",
+            "args": [
+            ]
+        },
+        {
             "name": "Python: Current File",
             "type": "python",
             "request": "launch",
