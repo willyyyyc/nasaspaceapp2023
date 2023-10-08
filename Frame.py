@@ -33,7 +33,8 @@ class Frame:
         return_frame =Frame(thresholded_frame)
         return_frame._is_grayscale = True
         return return_frame
-
+    
+    #pointless??
     def resize(self, width=None, height=None):
         if width is None and height is None:
             return self  # No need to resize
