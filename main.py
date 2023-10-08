@@ -1,9 +1,12 @@
 from Song import Song
 from Sound import Sound
-from Tone import Tone
 from Video import Video  
 from Frame import Frame
-from audio_lib import star_to_music
+from Note import Note
+from audio_lib import octave
+import math
+from pydub import AudioSegment
+from pydub.playback import play
 
 def get_stars(frame: 'Frame') -> 'Frame':
     """function responsible for optimizing the image to find stars
@@ -24,13 +27,45 @@ def get_stars(frame: 'Frame') -> 'Frame':
     thresholded_frame = blurred_frame.threshold(127)
 
     # Find all high-intensity regions
-    contours, stars = thresholded_frame.find_high_intensity_regions()
+    _, stars = thresholded_frame.find_high_intensity_regions()
 
-    contours.display(window_name='Contours')
+    #contours.display(window_name='Contours')
     
     stars_filtered = [star for star in stars if star.size > 5]
 
     return stars_filtered
+
+def star_to_music(star):
+    size = math.log(star.size) * 4
+    intensity = star.intensity
+    if (127 <= intensity < 146):
+        audio_file = AudioSegment.from_file(octave.get("a"))[:33]+size
+        new_note_a = Note(audio_file)
+        return new_note_a
+    elif (146 <= intensity < 165):
+        audio_file = AudioSegment.from_file(octave.get("b"))[:33]+size
+        new_note_b = Note(audio_file)
+        return new_note_b
+    elif (165 <= intensity < 184):
+        audio_file = AudioSegment.from_file(octave.get("c"))[:33]+size
+        new_note_c = Note(audio_file)
+        return new_note_c    
+    elif (184 <= intensity < 203):
+        audio_file = AudioSegment.from_file(octave.get("d"))[:33]+size
+        new_note_d = Note(audio_file)
+        return new_note_d
+    elif (203 <= intensity < 222):
+        audio_file = AudioSegment.from_file(octave.get("e"))[:33]+size
+        new_note_e = Note(audio_file)
+        return new_note_e
+    elif (222 <= intensity < 241):
+        audio_file = AudioSegment.from_file(octave.get("f"))[:33]+size
+        new_note_f = Note(audio_file)
+        return new_note_f
+    elif (241 <= intensity < 256):
+        audio_file = AudioSegment.from_file(octave.get("g"))[:33]+size
+        new_note_g = Note(audio_file)
+        return new_note_g
 
 if __name__ == "__main__":
    
@@ -42,12 +77,12 @@ if __name__ == "__main__":
         
         stars = get_stars(frame)
 
-        tones = []
+        notes = []
 
         for star in stars:
-            tones.append(Tone(star_to_music(star)))
+            notes.append(star_to_music(star))
         
-        sound = Sound(tones)
+        sound = Sound(notes)
 
         sounds.append(sound)
     
