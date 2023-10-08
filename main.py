@@ -2,8 +2,9 @@ from Song import Song
 from Sound import Sound
 from Video import Video  
 from Frame import Frame
+import statistics
 from Note import Note
-from music21 import chord, stream
+from music21 import chord, stream, volume
 from music_lib import create_chords_from_stars, combine_chords_into_music
 import math
 from pydub import AudioSegment
@@ -55,6 +56,12 @@ if __name__ == "__main__":
         # Create a chord or note sequence for stars in the frame
         frame_chord = chord.Chord([create_chords_from_stars(star) for star in stars])
         
+        vel = math.log(statistics.mean([star.size for star in stars]))*10
+        
+        chord_vol = volume.Volume(velocity=vel)
+
+        frame_chord.volume = chord_vol
+
         # Append the frame's chord to the composition
         composition_stream.append(frame_chord)
     

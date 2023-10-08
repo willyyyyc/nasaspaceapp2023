@@ -5,7 +5,7 @@ def combine_chords_into_music(chords):
     # Create a stream for the entire composition
     composition_stream = stream.Stream()
     composition_stream.append(instrument.Piano())  # You can choose any instrument
-    
+
     # Create a melody using the mapped chords
     melody_stream = stream.Part()
     melody_stream.append(instrument.Piano())  # You can choose any instrument
