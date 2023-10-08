@@ -3,7 +3,8 @@ from Sound import Sound
 from Video import Video  
 from Frame import Frame
 from Note import Note
-from audio_lib import octave
+from music21 import chord, stream
+from music_lib import create_chords_from_stars, combine_chords_into_music
 import math
 from pydub import AudioSegment
 from pydub.playback import play
@@ -31,41 +32,9 @@ def get_stars(frame: 'Frame') -> 'Frame':
 
     #contours.display(window_name='Contours')
     
-    stars_filtered = [star for star in stars if star.size > 5]
+    stars_filtered = sorted([star for star in stars if star.size > 5], key=lambda star: star.size, reverse=True)[:3]
 
     return stars_filtered
-
-def star_to_music(star):
-    size = math.log(star.size) * 4
-    intensity = star.intensity
-    if (127 <= intensity < 146):
-        audio_file = octave.get("a")
-        new_note_a = Note(audio_file, size)
-        return new_note_a
-    elif (146 <= intensity < 165):
-        audio_file = octave.get("b")
-        new_note_b = Note(audio_file, size)
-        return new_note_b
-    elif (165 <= intensity < 184):
-        audio_file = octave.get("c")
-        new_note_c = Note(audio_file, size)
-        return new_note_c    
-    elif (184 <= intensity < 203):
-        audio_file = octave.get("d")
-        new_note_d = Note(audio_file, size)
-        return new_note_d
-    elif (203 <= intensity < 222):
-        audio_file = octave.get("e")
-        new_note_e = Note(audio_file, size)
-        return new_note_e
-    elif (222 <= intensity < 241):
-        audio_file = octave.get("f")
-        new_note_f = Note(audio_file, size)
-        return new_note_f
-    elif (241 <= intensity < 256):
-        audio_file = octave.get("g")
-        new_note_g = Note(audio_file, size)
-        return new_note_g
 
 if __name__ == "__main__":
    
@@ -73,20 +42,21 @@ if __name__ == "__main__":
     
     sounds = []
 
-    for frame in video.frames:
-        
+    chords = []
+
+    # Create a stream for the entire composition
+    composition_stream = stream.Stream()
+
+    for i in range(0, len(video.frames), 15):
+        frame = video.frames[i]
+
         stars = get_stars(frame)
 
-        notes = []
-
-        for star in stars:
-            notes.append(star_to_music(star))
-            print(star)
+        # Create a chord or note sequence for stars in the frame
+        frame_chord = chord.Chord([create_chords_from_stars(star) for star in stars])
         
-        sound = Sound(notes)
-
-        sounds.append(sound)
+        # Append the frame's chord to the composition
+        composition_stream.append(frame_chord)
     
-    song = Song(sounds)
-
+    composition_stream.write('midi', 'combined_sound.mid')
     

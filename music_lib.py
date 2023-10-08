@@ -1,28 +1,36 @@
 import math
-from music21 import chord
+from music21 import stream, instrument, chord, volume
 
-class MusicAttributes:
-    def __init__(self, intensity, size):
-        self.intensity = intensity
-        self.size = size
+def combine_chords_into_music(chords):
+    # Create a stream for the entire composition
+    composition_stream = stream.Stream()
+    composition_stream.append(instrument.Piano())  # You can choose any instrument
+    
+    # Create a melody using the mapped chords
+    melody_stream = stream.Part()
+    melody_stream.append(instrument.Piano())  # You can choose any instrument
 
-def map_attributes_to_music(star):
-    # Map intensity to chords
-    if star.intensity < 190:
-        chords = [chord.Chord(['C4', 'E4', 'G4'])]  # Example chord for low intensity
-    elif 190 <= star.intensity < 250:
-        chords = [chord.Chord(['D4', 'F4', 'A4'])]  # Example chord for medium intensity
-    else:
-        chords = [chord.Chord(['E4', 'G4', 'B4'])]  # Example chord for high intensity
+    for chord_obj in chords:
+        melody_stream.append(chord_obj)
 
-    # Map size to volume
-    volume = math.log(star.size) * 4  # Example scaling for volume
+    # Add the melody to the composition
+    composition_stream.append(melody_stream)
 
-    return chords, volume
+    return composition_stream
 
-# Example usage:
-attributes = MusicAttributes(intensity=0.5, size=0.8)
-mapped_chords, mapped_volume = map_attributes_to_music(attributes)
+def create_chords_from_stars(star):
+    # Map star attributes to a single chord
+    if star.intensity is not None and star.size is not None:
+        # Map intensity to chords
+        if star.intensity < 200:
+            chord_symbol = 'C4'  # Example chord for low intensity
+        elif 200 <= star.intensity < 220:
+            chord_symbol = 'D4'  # Example chord for medium intensity
+        else:
+            chord_symbol = 'E4'  # Example chord for high intensity
 
-print("Mapped Chords:", mapped_chords)
-print("Mapped Volume:", mapped_volume)
+        # Create the chord
+        chord_obj = chord.Chord([chord_symbol])
+
+        return chord_obj
+    return None
