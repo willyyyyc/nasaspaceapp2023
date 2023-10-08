@@ -1,5 +1,6 @@
 from typing import TYPE_CHECKING
 import numpy as np
+import cv2
 if TYPE_CHECKING:
     from Frame import Frame
     from numpy import ndarray

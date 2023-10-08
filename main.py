@@ -39,32 +39,32 @@ def star_to_music(star):
     size = math.log(star.size) * 4
     intensity = star.intensity
     if (127 <= intensity < 146):
-        audio_file = AudioSegment.from_file(octave.get("a"))[:33]+size
-        new_note_a = Note(audio_file)
+        audio_file = octave.get("a")
+        new_note_a = Note(audio_file, size)
         return new_note_a
     elif (146 <= intensity < 165):
-        audio_file = AudioSegment.from_file(octave.get("b"))[:33]+size
-        new_note_b = Note(audio_file)
+        audio_file = octave.get("b")
+        new_note_b = Note(audio_file, size)
         return new_note_b
     elif (165 <= intensity < 184):
-        audio_file = AudioSegment.from_file(octave.get("c"))[:33]+size
-        new_note_c = Note(audio_file)
+        audio_file = octave.get("c")
+        new_note_c = Note(audio_file, size)
         return new_note_c    
     elif (184 <= intensity < 203):
-        audio_file = AudioSegment.from_file(octave.get("d"))[:33]+size
-        new_note_d = Note(audio_file)
+        audio_file = octave.get("d")
+        new_note_d = Note(audio_file, size)
         return new_note_d
     elif (203 <= intensity < 222):
-        audio_file = AudioSegment.from_file(octave.get("e"))[:33]+size
-        new_note_e = Note(audio_file)
+        audio_file = octave.get("e")
+        new_note_e = Note(audio_file, size)
         return new_note_e
     elif (222 <= intensity < 241):
-        audio_file = AudioSegment.from_file(octave.get("f"))[:33]+size
-        new_note_f = Note(audio_file)
+        audio_file = octave.get("f")
+        new_note_f = Note(audio_file, size)
         return new_note_f
     elif (241 <= intensity < 256):
-        audio_file = AudioSegment.from_file(octave.get("g"))[:33]+size
-        new_note_g = Note(audio_file)
+        audio_file = octave.get("g")
+        new_note_g = Note(audio_file, size)
         return new_note_g
 
 if __name__ == "__main__":
@@ -81,6 +81,7 @@ if __name__ == "__main__":
 
         for star in stars:
             notes.append(star_to_music(star))
+            print(star)
         
         sound = Sound(notes)
 
